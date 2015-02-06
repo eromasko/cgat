@@ -862,11 +862,14 @@ def dumpWindowsReadCounts(infiles, outfile):
     can be loaded into R for manual analysis.
     '''
     design_file, counts_file = infiles
-
-    statement = '''python %(scriptsdir)s/runExpression.py
-              --method=dump
+    
+    # TS
+    # statement changes to reflect change from runExpression "dump"
+    # to counts2counts "filter"
+    statement = '''cat %(counts_file)s |
+              python %(scriptsdir)s/counts2counts.py
+              --method=filter
               --design-tsv-file=%(design_file)s
-              --tags-tsv-file=%(counts_file)s
               --log=%(outfile)s.log
               > %(outfile)s'''
 
